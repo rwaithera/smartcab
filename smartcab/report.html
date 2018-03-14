@@ -91335,7 +91335,7 @@ VbW478xMj30AAAAASUVORK5CYII=
 <p><strong>Answer:</strong></p>
 <p>Features chosen are waypoint, light, left and oncoming.</p>
 <p>We need to know, the agents intended direction of travel to choose the appropriate action. We also need to observe traffic light at an intersection to avoid collisions.</p>
-<p>An agent needs to know the intended action of oncoming vehicles when they intended to turn left to avoid collisions. An agent also needs to know the intended direction of travel of the vehicle on the left side at an intersection, in case it needs to turn left or go forward.</p>
+<p>The agent needs to know the intended action of both oncoming vehicles and vehicles on the left given the current waypoint, and traffic light status to avoid collisions.</p>
 <p>The agent does not need to know where the vehicle coming from the right needs to turn because according to US right-of-way rules, we never need to know where the vehicle on our right intends to turn. I also did not include deadline. We are trying to get the agent to learn traffic rules at intersection. We do not want the agent penalized for actions it takes at an intersection because it wants to beat the deadline.</p>
 
 </div>
@@ -94598,8 +94598,8 @@ zMzMrE6cYJmZmZmZmdWJEywzMzMzM7M6+f8B3SryZ9880m4AAAAASUVORK5CYII=
 <li>Otherwise, if the light is green, and there is no oncoming traffic moving forward, turn left</li>
 </ul>
 </li>
-<li>If waypoint is right (our action is not dependent on traffic lights at this point)<ul>
-<li>If the traffic on the left is moving forward, wait</li>
+<li>If waypoint is right<ul>
+<li>If the light is red and traffic on the left is moving forward, wait</li>
 <li>Otherwise, turn right</li>
 </ul>
 </li>
@@ -94676,8 +94676,8 @@ In this instance, the most optimal action for the agent would be to move right s
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>For the smartcab, the agent gets penalized when it is not in violation. There are many instances in which the agent does not commit a violation. Across these instances, waypoint is one factor that the agent can learn from whenever it get's penalized. So, if an agent does not follow the suggested waypoint, it gets peanlized and continously learns from these penalties. The agent does not get penalized (hence does not learn), by knowing which intersection is closer to the destination. It cannot compare between multiple paths using each of their future rewards.</p>
-<p>In the current environment, the destination changes at each step. If the destination remained the same throughout the trial, the agent would know which state/intersection would bring it closer to the destination. The agent would be able propagate back rewards of each intersection that would have brought it closer to the fixed destination. But in the current environment, where the destination changes at each step, future rewards would not work.</p>
+<p>For the smartcab, the agent gets penalized when it is not in violation. There are many instances in which the agent does not commit a violation. Across these instances, waypoint is one factor that the agent can learn from whenever it get's penalized. So, if an agent does not follow the suggested waypoint, it gets penalized and continously learns from these penalties. The agent does not get penalized (hence does not learn), by knowing which intersection is closer to the destination. It cannot compare between multiple paths. It cannot make a comparison between a reward now and a large reward later because it does not know how long is the later.</p>
+<p>In the current environment, the destination changes at each step. If the destination remained the same throughout the trial, the agent would know which state/intersection would bring it closer to the destination. The agent would be able propagate back rewards of each intersection that would have brought it closer to the fixed destination. But in the current environment, where we would be propagating back from a destination that changes at each step, after a number of trials, we would be propagating back from every intersection that was once a destination.</p>
 
 </div>
 </div>
